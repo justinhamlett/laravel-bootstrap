@@ -10,6 +10,11 @@ class BlocksController extends ObjectBaseController {
     protected $view_key = 'blocks';
 
     /**
+     * @var boolean
+     */
+    protected $uploadable = true;
+
+    /**
      * Construct Shit
      */
     public function __construct( BlocksInterface $blocks )

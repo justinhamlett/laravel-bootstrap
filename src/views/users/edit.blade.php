@@ -34,6 +34,13 @@
         </div>
     </div>
 
+    <div class="form-group">
+        {{ Form::label( "role" , 'Role' , array( 'class'=>'col-lg-2 control-label' ) ) }}
+        <div class="col-lg-10">
+            {{ Form::text( "role" , Input::old( "role", $item->role ) , array( 'class'=>'form-control' , 'placeholder'=>'Role' ) ) }}
+        </div>
+    </div>
+
     <h3>Authentication</h3>
 
     {{-- The password form item --}}

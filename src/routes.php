@@ -7,6 +7,7 @@ $urlSegment = Config::get('laravel-bootstrap::app.access_url');
 Route::filter('adminFilter', 'Davzie\LaravelBootstrap\Filters\Admin');
 
 Route::controller( $urlSegment.'/users'     , 'Davzie\LaravelBootstrap\Controllers\UsersController' );
+Route::controller( $urlSegment.'/uploads' , 	'Davzie\LaravelBootstrap\Controllers\UploadsController' );
 Route::controller( $urlSegment.'/galleries' , 'Davzie\LaravelBootstrap\Controllers\GalleriesController' );
 Route::controller( $urlSegment.'/settings'  , 'Davzie\LaravelBootstrap\Controllers\SettingsController' );
 Route::controller( $urlSegment.'/blocks'    , 'Davzie\LaravelBootstrap\Controllers\BlocksController' );

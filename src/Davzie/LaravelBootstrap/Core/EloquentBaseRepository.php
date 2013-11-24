@@ -74,7 +74,7 @@ class EloquentBaseRepository
      */
     public function getBySlug($slug)
     {
-        return $this->model->where('slug','=',$slug)->first();
+        return $this->model->where('title','like',$slug)->first();
     }
 
     public function requireById($id)

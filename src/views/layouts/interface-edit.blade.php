@@ -4,7 +4,7 @@
     
     @if( isset($uploadable) and $uploadable )
         <div class="row">
-            <div class="col-12 col-lg-8 col-md-8">
+            <div class="col-12 col-lg-12 col-md-12">
     @endif
             @yield('heading')
 
@@ -30,7 +30,7 @@
             {{ Form::close() }}
         @if( isset($uploadable) and $uploadable )
                 </div>
-                <div class="col-12 col-md-4 col-lg-4">
+                <div class="col-12 col-md-4 col-lg-4" id="uploader">
                     <h4>Upload Item Images</h4>
                     <p>Drag and drop images into the box below or simply click it to select files to upload</p>
                     <p><strong>Note: </strong>This will also save and refresh this page.</p>
@@ -52,6 +52,16 @@
         <script src="{{ asset('packages/davzie/laravel-bootstrap/js/jquery-ui.js') }}"></script>
         <script>
             $(document).ready(function(){
+              $('#uploader').hide();
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                  var id = $(e.target).attr("href").substr(1);
+                  if (id == 'images') {
+                    $('#uploader').show();
+                  }
+                  else {
+                    $('#uploader').hide();
+                  }
+                })
 
                 // Setup some options for our Dropzone
                 Dropzone.options.imageUploads = {

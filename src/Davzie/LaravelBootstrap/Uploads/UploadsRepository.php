@@ -12,7 +12,7 @@ class UploadsRepository extends EloquentBaseRepository implements UploadsInterfa
      */
     public function getInOrder()
     {
-        return $this->orderBy('order','asc')->get();
+        return $this->model->orderBy('order','asc')->get();
     }
 
     /**
@@ -153,7 +153,7 @@ class UploadsRepository extends EloquentBaseRepository implements UploadsInterfa
             ];
             $this->getModel()->insert( $data );
             // Insert the data into the uploads model
-            return true;
+            return $path . '/' . $filename;
         }
 
         return false;

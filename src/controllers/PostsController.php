@@ -11,6 +11,11 @@ class PostsController extends ObjectBaseController {
     protected $view_key = 'posts';
 
     /**
+     * @var boolean
+     */
+    protected $uploadable = true;
+
+    /**
      * Construct Shit
      */
     public function __construct( PostsInterface $posts )

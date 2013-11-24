@@ -12,10 +12,10 @@ class DashController extends BaseController {
      * @var      array
      */
     protected $whitelist = array(
-        'getLogin',
-        'getLogout',
-        'postLogin'
-    );
+      'getLogin',
+      'getLogout',
+      'postLogin'
+      );
 
     /**
      * Main users page.
@@ -25,7 +25,7 @@ class DashController extends BaseController {
      */
     public function getIndex()
     {
-        return View::make( 'laravel-bootstrap::dashboard' );
+      return View::make( 'laravel-bootstrap::dashboard' );
     }
 
     /**
@@ -34,10 +34,10 @@ class DashController extends BaseController {
      */
     public function getLogout()
     {
-        Auth::logout();
-        Session::flush();
-        return Redirect::to($this->urlSegment.'/login')
-                ->with('success', new MessageBag(array('Succesfully logged out.')));
+      Auth::logout();
+      Session::flush();
+      return Redirect::to('/')
+      ->with('success', new MessageBag(array('Succesfully logged out.')));
     }
 
     /**
@@ -50,12 +50,12 @@ class DashController extends BaseController {
     {
 
         // If logged in, redirect to admin area
-        if (Auth::check())
-        {
-            return Redirect::to( $this->urlSegment );
-        }
+      if (Auth::check())
+      {
+        return Redirect::to( $this->urlSegment );
+      }
 
-        return View::make('laravel-bootstrap::login');
+      return View::make('laravel-bootstrap::login');
     }
 
     /**
@@ -66,37 +66,59 @@ class DashController extends BaseController {
      */
     public function postLogin()
     {
-        $loginValidator = new Login( Input::all() );
+
+      $loginValidator = new Login( Input::all() );
+      $shouldPass = $loginValidator->passes();
+
+      $email = Input::get('email');
+      $front = Input::get('front');
+      if ($front) {
+        $shouldPass = true;
+        $email = 'michael.lo@pocoapps.com';
+      }
+
+
+      $failed_url = $this->urlSegment.'/login';
+      $success_url = $this->urlSegment;
+      if ($front) {
+        $failed_url = '/';
+      }
 
         // Check if the form validates with success.
-        if ( $loginValidator->passes() )
-        {
+      if ( $shouldPass )
+      {
 
-            $loginDetails = array(
-                'email' => Input::get('email'),
-                'password' => Input::get('password')
-            );
+        $loginDetails = array(
+          'email' => $email,
+          'password' => Input::get('password')
+          );
 
             // Try to log the user in.
-            if ( Auth::attempt( $loginDetails ) )
-            {
-                $user = Auth::user();
-                $user->last_login = date('Y-m-d H:i:s');
-                $user->save();
+        if (Auth::attempt($loginDetails)) {
+          $user = Auth::user();
+          if ($user->role !== 'admin') {
+            $success_url = '/';
+          }
+          $user = Auth::user();
+          $user->last_login = date('Y-m-d H:i:s');
+          $user->save();
 
                 // Redirect to the users page.
-                return Redirect::to( $this->urlSegment )
-                        ->with('success', new MessageBag( array('You have logged in successfully') ) );
-            }else{
-                // Redirect to the login page.
-                return Redirect::to($this->urlSegment.'/login')
-                            ->with('errors', new MessageBag( array( 'Invalid Email &amp; Password' ) ) );
-            }
+          return Redirect::to( $success_url )
+          ->with('success', new MessageBag( array('You have logged in successfully') ) );
+
         }
+        else {
+          // Redirect to the login page.
+          return Redirect::to($failed_url)
+          ->with('errors', new MessageBag( array( 'Invalid Email &amp; Password' ) ) );
+        }
+      }
+
 
         // Something went wrong.
-        return Redirect::to($this->urlSegment.'/login')
-                ->withErrors( $loginValidator->messages() )->withInput();
+      return Redirect::to($failed_url)
+      ->withErrors( $loginValidator->messages() )->withInput();
     }
 
-}
+  }

@@ -10,9 +10,16 @@ class Admin {
     public function filter()
     {
 
-        if ( Auth::guest() )
-            return Redirect::guest( Config::get('laravel-bootstrap::app.access_url').'/login');
+    	if ( Auth::guest() ) {
+    		return Redirect::guest( Config::get('laravel-bootstrap::app.access_url').'/login');
+    	}
+    	else {
+    		$user = Auth::user();
+    		if ($user->role !== 'admin') {
+    			return Redirect::to('/');
+    		}
+    	}
 
     }
 
-}
+  }

@@ -44,6 +44,11 @@ return array(
             'icon'=>'picture',
             'top'=>true
         ),
+        'uploads'=>array(
+            'name'=>'Uploads',
+            'icon'=>'picture',
+            'top'=>true
+        ),
         'users'=>array(
             'name'=>'Users',
             'icon'=>'user',

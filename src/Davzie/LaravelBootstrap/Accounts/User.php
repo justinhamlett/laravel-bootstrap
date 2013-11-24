@@ -20,7 +20,7 @@ class User extends EloquentBaseModel implements LaravelUserInterface, Remindable
      * These are the mass-assignable keys
      * @var array
      */
-    protected $fillable = array('first_name', 'last_name', 'email', 'password');
+    protected $fillable = array('first_name', 'last_name', 'email', 'password', 'role');
 
     protected $validationRules = [
         'first_name'    => 'required',
@@ -76,4 +76,11 @@ class User extends EloquentBaseModel implements LaravelUserInterface, Remindable
         $this->attributes['password'] = Hash::make( $value );
     }
 
+    public function isValid( $data = array() ) {
+      if (isset($data['password']) && strlen($data['password']) == 0) {
+        unset($data['password']);
+        unset($this->validationRules['password']);
+      }
+      return parent::isValid($data);
+    }
 }

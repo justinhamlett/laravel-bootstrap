@@ -6,7 +6,8 @@
             @if( !$item->uploads->isEmpty() )
                 <div id="item-media" class="row">
                     @foreach($item->uploads as $upload)
-                        <div upload-id="{{ $upload->id }}" class="col-sm-6 col-md-4">
+                        <?php $upload->sizeImg( 1024 , 577 , false ); ?>
+                            <div upload-id="{{ $upload->id }}" class="col-sm-6 col-md-4">
                             <div class="thumbnail">
                                 <div class="image-container">
                                     <img src="{{ $upload->sizeImg( 200 , 150 , false ) }}" alt="">

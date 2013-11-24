@@ -10,11 +10,12 @@
 
         <!-- Bootstrap core CSS -->
         @section('css')
-            <link rel="stylesheet" href="{{ asset('packages/davzie/laravel-bootstrap/css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"> 
             <link rel="stylesheet" href="{{ asset('packages/davzie/laravel-bootstrap/css/styles.css') }}">
             <link rel="stylesheet" href="{{ asset('packages/davzie/laravel-bootstrap/css/jquery.tagsinput.min.css') }}">
             <link rel="stylesheet" href="{{ asset('packages/davzie/laravel-bootstrap/css/redactor.css') }}">
         @show
+
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
@@ -62,21 +63,7 @@
 
         <div class="container">
             <div class="row">
-
-                <div class="col-sm-3">
-
-                    @if($menu_items)
-                        <div class="list-group">
-                            @foreach($menu_items as $url=>$item)
-                                <a class="list-group-item {{ Request::is( "$urlSegment/$url*" ) ? 'active' : '' }}" href="{{ url( $urlSegment.'/'.$url ) }}">
-                                    <span class="glyphicon glyphicon-{{ $item['icon'] }}"></span> {{ $item['name'] }}
-                                </a>
-                            @endforeach
-                        </div>
-                    @endif
-
-                </div>
-                <div class="col-sm-9">
+                <div class="col-sm-12">
                     @yield('content')
                 </div>
 
@@ -105,8 +92,12 @@
                         $(taggables).tagsInput({});
                     
                     if( richText.length )
-                        $(richText).redactor();
-
+                        $(richText).redactor({
+                            minHeight: 400,
+                           imageGetJson: '/images.json',
+                           toolbarFixed: true,
+                           autoresize: false
+                        });
                 });
             </script>
         @show
