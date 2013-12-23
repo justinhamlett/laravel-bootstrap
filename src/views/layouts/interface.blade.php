@@ -94,6 +94,7 @@
                     if( richText.length )
                         $(richText).redactor({
                             minHeight: 400,
+                            fileUpload: '/upload',
                            imageGetJson: '/images.json',
                            toolbarFixed: true,
                            autoresize: false

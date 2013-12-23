@@ -23,6 +23,9 @@ class UploadsController extends ObjectBaseController {
     {
         $ims = Input::get('deleteImage');
         $uploads = App::make('Davzie\LaravelBootstrap\Uploads\UploadsInterface');
+        // #todo delete relations?
+        // $z = $uploads->getModel()->whereIn( 'id' , $ims )->get()[0]->uploadable()->get();
+        // var_dump($z);
         $success = $uploads->deleteById( $ims );
         return Redirect::to( $this->object_url )->with( 'success' , new MessageBag( array( 'Items deleted' ) ) );
     }

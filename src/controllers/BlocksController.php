@@ -12,7 +12,7 @@ class BlocksController extends ObjectBaseController {
     /**
      * @var boolean
      */
-    protected $uploadable = true;
+    protected $uploadable = false;
 
     /**
      * Construct Shit

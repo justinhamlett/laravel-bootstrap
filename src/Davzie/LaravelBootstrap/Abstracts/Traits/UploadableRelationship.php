@@ -5,17 +5,12 @@ trait UploadableRelationship
 {
 
     /**
-     * The relationship setup for taggable classes
+     * The relationship setup for many-to-many uploads.
      * @return Eloquent
      */
-    // public function uploads()
-    // {
-    //     return $this->morphMany( 'Davzie\LaravelBootstrap\Uploads\Uploads' , 'uploadable' )->orderBy('order','asc');
-    // }
-
     public function uploads()
     {
-        return $this->morphToMany( 'Davzie\LaravelBootstrap\Uploads\Uploads' , 'uploadable', 'uploadables', 'uploadable_id' )->orderBy('order','asc')->withPivot('id', 'uploadable_id');
+        return $this->morphToMany( 'Davzie\LaravelBootstrap\Uploads\Uploads' , 'uploadable' )->orderBy('order','asc')->withPivot('uploadable_id');
     }
 
     /**

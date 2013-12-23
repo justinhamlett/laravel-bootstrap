@@ -22,8 +22,8 @@ class Uploads extends EloquentBaseModel
 
     public function uploadable()
     {
-        // return $this->morphedByMany('Davzie\LaravelBootstrap\Uploads\Uploads', 'uploadables');
-        return $this->morphedByMany('Davzie\LaravelBootstrap\Uploads\Uploads', 'uploadables', 'uploadables', 'uploadable_id');
+        return $this->morphedByMany('Davzie\LaravelBootstrap\Galleries\Galleries', 'uploadable');
+        // return $this->morphedByMany('Davzie\LaravelBootstrap\Uploads\Uploads', 'uploadable');
     }
 
     /**
@@ -71,13 +71,14 @@ class Uploads extends EloquentBaseModel
 
     public function getAbsolutePath(){
         $base_path = Config::get('laravel-bootstrap::app.upload_base_path');
-        return public_path().'/'.$base_path.$this->path.'/'.$this->id.'/';
+        // return public_path().'/'.$base_path.$this->path.'/'.$this->id.'/';
+        return public_path().'/'.$base_path;
     }
 
     public function getPath(){
         $base_path = Config::get('laravel-bootstrap::app.upload_base_path');
-        return '/' . $base_path.$this->path.'/'.$this->id;
-        // return url( $base_path.$this->path.'/'.$this->uploadable_id.'/' );
+        // return '/' . $base_path.$this->path.'/'.$this->pivot->uploadable_id;
+        return '/'.$base_path;
     }
 
 }

@@ -59,6 +59,22 @@ class EloquentBaseModel extends Eloquent
         return $preparedRules;
     }
 
+    public function addImagery($upload_ids) {
+        if ($upload_ids) {
+            foreach ($upload_ids as $upload_id) {
+                $this->uploads()->attach($upload_id);
+            }
+        }
+    } 
+
+    public function removeImagery($upload_ids) {
+        if ($upload_ids) {
+            foreach ($upload_ids as $upload_id) {
+                $this->uploads()->detach($upload_id);
+            }
+        }
+    } 
+
     /**
      * Hydrate the model with more stuff and 
      * @return this
@@ -68,8 +84,12 @@ class EloquentBaseModel extends Eloquent
         if( $this->isTaggable() )
             $this->saveTags();
 
-        if( $this->isUploadable() )
-            $this->deleteImagery( Input::get('deleteImage') );
+        var_dump(Input::get('removeImage'));
+        if( $this->isUploadable() ) {
+            // $this->deleteImagery( Input::get('deleteImage') );
+            $this->addImagery( Input::get('addImage') );
+            $this->removeImagery( Input::get('removeImage') );
+        }
 
         return $this;
     }

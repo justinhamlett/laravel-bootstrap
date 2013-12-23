@@ -119,12 +119,12 @@ class UploadsRepository extends EloquentBaseRepository implements UploadsInterfa
 
     /**
      * Upload an image to an object type and ID along with key
-     * @param  integer $id   The ID of the object to associate with
+     * @param  object $object   The object to associate withs
      * @param  string  $type The class name of the model to associate with
      * @param  string  $key  The key used in the directory heirachy
      * @return void
      */
-    public function doUpload( $id , $type , $key )
+    public function doUpload( $object , $type , $key )
     {
 
         $base_path = Config::get('laravel-bootstrap::app.upload_base_path');
@@ -132,18 +132,16 @@ class UploadsRepository extends EloquentBaseRepository implements UploadsInterfa
         $randomKey  = sha1( time() . microtime() );
         $extension  = Input::file('file')->getClientOriginalExtension();
         $filename   = $randomKey.'.'.$extension;
-        $path       = '/'.$base_path.'/' . $key . '/' . $id;
+        $path       = '/'.$base_path;
+        // $path       = '/'.$base_path.'/' . $key . '/' . $object->id;
 
         // Move the file and determine if it was succesful or not
         $upload_success = Input::file('file')->move( public_path() . $path , $filename );
 
         // Do our model insertion activity
         if( $upload_success ){
-
             $now = date('Y-m-d H:i:s');
             $data = [
-                'uploadable_type'   =>  $type,
-                'uploadable_id'     =>  $id,
                 'path'              =>  $key,
                 'filename'          =>  $filename,
                 'extension'         =>  $extension,
@@ -151,8 +149,18 @@ class UploadsRepository extends EloquentBaseRepository implements UploadsInterfa
                 'created_at'        =>  $now,
                 'updated_at'        =>  $now
             ];
+            /*
             $this->getModel()->insert( $data );
             // Insert the data into the uploads model
+            */
+            $uploadClass = get_class($this->getModel());
+            $upload = new $uploadClass($data);
+            $upload->save();
+            $upload->sizeImg( 1024 , null , false );
+            $upload->sizeImg( 200 , 150 , false );
+            if ($object) {
+                $object->uploads()->save($upload);
+            }
             return $path . '/' . $filename;
         }
 

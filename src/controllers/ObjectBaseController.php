@@ -119,12 +119,15 @@ abstract class ObjectBaseController extends BaseController {
         } catch( EntityNotFoundException $e ){
             return Redirect::to( $this->object_url )->with('errors', new MessageBag( array("An item with the ID:$id could not be found.") ) );
         }
-        
+
+        // add all uploads for selection
+        $allUploads = $this->uploads_model->getInOrder();
+
         if( !View::exists( 'laravel-bootstrap::'.$this->view_key.'.edit' ) )
             return App::abort(404, 'Page not found');
 
         return View::make('laravel-bootstrap::'.$this->view_key.'.edit')
-                    ->with( 'item' , $item );
+                    ->with( 'item' , $item )->with('allUploads', $allUploads);
     }
 
     /**
@@ -192,14 +195,14 @@ abstract class ObjectBaseController extends BaseController {
      * @return Response
      */
     public function postUpload( $id ){
-
+        $object = $this->model->getById( $id );
         // This should only be accessible via AJAX you know...
-        if( !Request::ajax() or !$this->model->getById( $id ) )
+        if( !Request::ajax() or !$object )
             Response::json('error', 400);
 
         $key = $this->model->getModel()->getTableName();
         $type = get_class( $this->model->getModel() );
-        $success = $this->uploads_model->doUpload( $id , $type , $key );
+        $success = $this->uploads_model->doUpload( $object , $type , $key );
 
         if(!$success)
             Response::json('error', 400);
