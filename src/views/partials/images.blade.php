@@ -2,7 +2,9 @@
     <div class="tab-pane" id="images">
         <fieldset>
             <p>Upload images using the form below. Once uploaded, the item will save itself and return you back to this page to order your images.</p>
-
+            <?php
+            var_dump($item->uploads);
+            ?>
             @if( !$item->uploads->isEmpty() )
                 <div id="item-media" class="row">
                     @foreach($item->uploads as $upload)

@@ -16,9 +16,15 @@ class Uploads extends EloquentBaseModel
      * These are the mass-assignable keys
      * @var array
      */
-    protected $fillable = array();
+    protected $guarded = array();
 
     protected $validationRules = [];
+
+    public function uploadable()
+    {
+        // return $this->morphedByMany('Davzie\LaravelBootstrap\Uploads\Uploads', 'uploadables');
+        return $this->morphedByMany('Davzie\LaravelBootstrap\Uploads\Uploads', 'uploadables', 'uploadables', 'uploadable_id');
+    }
 
     /**
      * Strip the extensions from the filename and just return the filename, we need this to append stuff
@@ -65,12 +71,12 @@ class Uploads extends EloquentBaseModel
 
     public function getAbsolutePath(){
         $base_path = Config::get('laravel-bootstrap::app.upload_base_path');
-        return public_path().'/'.$base_path.$this->path.'/'.$this->uploadable_id.'/';
+        return public_path().'/'.$base_path.$this->path.'/'.$this->id.'/';
     }
 
     public function getPath(){
         $base_path = Config::get('laravel-bootstrap::app.upload_base_path');
-        return '/' . $base_path.$this->path.'/'.$this->uploadable_id.'/';
+        return '/' . $base_path.$this->path.'/'.$this->id;
         // return url( $base_path.$this->path.'/'.$this->uploadable_id.'/' );
     }
 
