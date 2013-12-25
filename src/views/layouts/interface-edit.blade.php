@@ -12,7 +12,7 @@
             @include('laravel-bootstrap::partials.edit-menu')
 
             @if( isset($uploadable) and $uploadable )
-                <div class="col-12 col-md-4 col-lg-4" id="uploader">
+            <div class="col-12 col-md-4 col-lg-4" id="uploader">
                     <h4>Upload Item Images</h4>
                     <p>Drag and drop images into the box below or simply click it to select files to upload</p>
                     <p><strong>Note: </strong>This will also save and refresh this page.</p>
@@ -55,7 +55,6 @@
         <script src="{{ asset('packages/davzie/laravel-bootstrap/js/jquery-ui.js') }}"></script>
         <script>
             $(document).ready(function(){
-                alert('ok');
               $('#uploader').hide();
                 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                   var id = $(e.target).attr("href").substr(1);
