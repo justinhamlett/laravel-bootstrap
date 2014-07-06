@@ -1,24 +1,24 @@
 {
-    "name": "davzie/laravel-bootstrap",
-    "description": "A Laravel 4 Based CMS Built With Twitter Bootstrap 3 [develop]",
-    "authors": [
-        {
-            "name": "David Thorpe",
-            "email": "davzie@davzie.com"
-        }
+  "name": "davzie/laravel-bootstrap",
+  "description": "A Laravel 4 Based CMS Built With Twitter Bootstrap 3 [develop]",
+  "authors": [
+      {
+          "name": "David Thorpe",
+          "email": "davzie@davzie.com"
+      }
+  ],
+  "require": {
+      "php": ">=5.4.0",
+      "illuminate/support": "4.2.x"
+  },
+  "autoload": {
+    "classmap": [
+      "src/migrations",
+      "src/controllers"
     ],
-    "require": {
-        "php": ">=5.4.0",
-        "illuminate/support": "4.2.x",
-    },
-    "autoload": {
-        "classmap": [
-            "src/migrations",
-            "src/controllers"
-        ],
-        "psr-0": {
-            "Davzie\\LaravelBootstrap": "src/"
-        }
-    },
-    "minimum-stability": "dev"
+    "psr-0": {
+      "Davzie\\LaravelBootstrap": "src/"
+    }
+  },
+  "minimum-stability": "dev"
 }
