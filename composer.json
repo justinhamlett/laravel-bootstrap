@@ -1,6 +1,6 @@
 {
   "name": "davzie/laravel-bootstrap",
-  "description": "A Laravel 4 Based CMS Built With Twitter Bootstrap 3 [develop]",
+  "description": "A Laravel 4.2 Based CMS Built With Twitter Bootstrap 3",
   "authors": [
       {
           "name": "David Thorpe",
