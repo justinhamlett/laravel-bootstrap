@@ -65,7 +65,7 @@ class EloquentBaseModel extends Eloquent
                 $this->uploads()->attach($upload_id);
             }
         }
-    } 
+    }
 
     public function removeImagery($upload_ids) {
         if ($upload_ids) {
@@ -73,13 +73,13 @@ class EloquentBaseModel extends Eloquent
                 $this->uploads()->detach($upload_id);
             }
         }
-    } 
+    }
 
     /**
-     * Hydrate the model with more stuff and 
+     * Hydrate the model with more stuff and
      * @return this
      */
-    public function hydrate()
+    public function hydrateModel()
     {
         if( $this->isTaggable() )
             $this->saveTags();
@@ -126,7 +126,7 @@ class EloquentBaseModel extends Eloquent
     public function isUploadable()
     {
         return in_array( 'Davzie\LaravelBootstrap\Abstracts\Traits\UploadableRelationship' , ( new ReflectionClass( $this ) )->getTraitNames() );
-    }            
+    }
 
     /**
      * Return the table name

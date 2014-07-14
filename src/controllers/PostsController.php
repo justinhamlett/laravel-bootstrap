@@ -39,7 +39,7 @@ class PostsController extends ObjectBaseController {
 
         // Run the hydration method that populates anything else that is required / runs any other
         // model interactions and save it.
-        $record->hydrate()->save();
+        $record->hydrateModel()->save();
 
         // Redirect that shit man! You did good! Validated and saved, man mum would be proud!
         return Redirect::to( $this->object_url )->with( 'success' , new MessageBag( array( 'Item Saved' ) ) );

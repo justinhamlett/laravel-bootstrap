@@ -30,7 +30,10 @@ trait UploadableRelationship
     public function deleteAllImagery()
     {
         $uploads = App::make('Davzie\LaravelBootstrap\Uploads\UploadsInterface');
-        $uploads->deleteByIdType( $this->id , $this->getTableName() );
+        $upload_ids = $this->uploads()->get()->all();
+        foreach ($upload_ids as $upload_id) {
+          $this->uploads()->detach($upload_id);
+        }
     }
 
 }
