@@ -83,4 +83,34 @@ class User extends EloquentBaseModel implements LaravelUserInterface, Remindable
       }
       return parent::isValid($data);
     }
+
+    /**
+     * Needed for Laravel 4.1 update
+     *
+     * @return string
+     */
+    public function getRememberToken()
+    {
+        return $this->remember_token;
+    }
+
+    /**
+     * Needed for Laravel 4.1 update
+     *
+     * @param string $value
+     */
+    public function setRememberToken($value)
+    {
+        $this->remember_token = $value;
+    }
+
+    /**
+     * Needed for Laravel 4.1 update
+     *
+     * @return string
+     */
+    public function getRememberTokenName()
+    {
+        return 'remember_token';
+    }
 }
